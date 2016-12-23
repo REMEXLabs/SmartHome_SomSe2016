@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008080</color>
+    <color name="colorPrimaryDark">#004747</color>
+    <color name="colorPrimaryLight">#82bcbd</color>
+    <color name="colorAccent">#B20040</color>
+
+    <!-- colors for things in the house -->
+    <color name="colorOven">#B20040</color>
+    <color name="colorDoor">#91007b</color>
+    <color name="colorWindows">#00a8ec</color>
+    <color name="colorLights">#C68700</color>
+    <color name="voice_success">#095d00</color>
+    <color name="voice_failed">#A8001B</color>
+</resources>

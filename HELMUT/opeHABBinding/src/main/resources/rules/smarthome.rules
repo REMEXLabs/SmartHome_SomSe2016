@@ -1,0 +1,170 @@
+import org.openhab.core.library.types.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.* 
+import com.android.loganalysis.item
+import java.util.ArrayList
+import java.util.HashSet
+import java.util.List
+import java.util.Set
+import java.util.concurrent.CopyOnWriteArrayList
+import org.openhab.core.library.types.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.* 
+import com.android.loganalysis.item
+import java.util.ArrayList
+import java.util.HashSet
+import java.util.List
+import java.util.Set
+import java.util.concurrent.CopyOnWriteArrayList
+import org.openhab.core.items.*
+import org.apache.commons.collections.ListUtils
+import org.openhab.core.types.Command
+import org.openhab.core.types.State
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+rule "Herd Indicator"
+    when Item Herd received command
+    then
+        if (Herd.state==ON){
+            sendCommand(Indicator_5, "338,100,70")
+        } else {
+            sendCommand(Indicator_5, "181,31,74")
+        }
+end
+
+rule "huehelper"
+    when Item Licht_Partyraum received update
+    then
+        if ((Licht_Partyraum.state as HSBType).getBrightness()>0)
+            sendCommand(HueHelper, ON)
+        else {
+            sendCommand(HueHelper, OFF)
+        }
+end
+
+rule "Update Indicator Light"
+    when 
+        Item Lights received update
+    then 
+        logInfo("UpdateIndicators", "RULE triggered")
+
+        Lights?.members.forEach[item|
+            if (item.state == ON){
+                logInfo("UpdateIndicators", "At least one light is on")
+                sendCommand(Indicator_1, "180,100,50")
+                return
+            }    
+        ]
+        logInfo("UpdateIndicators", "All lights are off")
+        sendCommand(Indicator_1, "0,0,0")
+end
+
+//Play doorbell sound
+rule "Virtual Front Doorbell"
+    when
+        Item Button_Front_Doorbell changed to CLOSED
+    then
+        playSound("doorbell.mp3")
+        logInfo("Virtual Front Doorbell", "DING...")
+        sendCommand(Vibration, ON)
+end
+
+//Voice rules
+rule "VoiceControl"
+when
+    Item VoiceCommand received command
+then
+    logInfo("VoiceControl", "Voice Command received: " + receivedCommand.toString.lowerCase)
+    var GenericItem myItem = null
+    val String stt_org = receivedCommand.toString.lowerCase
+    var String newState = ""
+    var String thing = ""
+    var success = 0
+    // find new state, toggle otherwise (if possible)
+
+    // fix plural confusion on light vs lights and others
+    var stt1=stt_org.replaceAll("night", "light")
+    var stt2=stt1.replaceAll("light", "lights")
+    var stt3=stt2.replaceAll("degree", "degrees")
+    var stt4=stt3.replaceAll("next", "nicks")
+    var stt5=stt4.replaceAll("jules", "jills")
+    var stt6=stt5.replaceAll("read", "red")
+    var stt7=stt6.replaceAll("'", "")
+    var stt=stt7.replaceAll("ss", "s")
+
+    logInfo("VoiceControl", "New String is: " + stt)
+    
+    if (stt.contains("degrees") || stt.contains("percent") || stt.contains("%")) {
+        // extract new state (find the digits in the string)
+        var Pattern p = Pattern::compile(".* ([0-9]+).*(degree|percent|%).*")
+        var Matcher m = p.matcher(stt)
+        if (m.matches()) {
+            newState = (newState) m.group(1).trim()
+        }
+    }
+    else if (stt.contains("aus") || stt.contains("off")) {
+        logInfo("VoiceControl", "matching state")
+        newState = "OFF"
+    } else if (stt.contains("ein") || stt.contains("an") || stt.contains("on")) {
+        newState = "ON"
+    } else if (stt.contains("rot")) {
+        newState = HSBType::RED.toString()
+    } else if (stt.contains("grün")) {
+        newState = HSBType::GREEN.toString()
+    } else if (stt.contains("blau")) {
+        newState = HSBType::BLUE.toString()
+    } else if (stt.contains("dunkler") || stt.contains("decrease")) {
+        newState = DECREASE.toString()
+    } else if (stt.contains("heller") || stt.contains("increase")) {
+        newState = INCREASE.toString()
+    } else {
+        newState=""
+    }
+    logInfo("VoiceControl", "new state will be: " + newState.toString)
+
+    if (stt.contains("licht") || stt.contains("lampe") || stt.contains("lichter")) {
+        if (stt.contains("wohnzimmer")) {
+            myItem = Licht_Wohnzimmer
+        } else if (stt.contains("bad")||stt.contains("badezimmer")||stt.contains("toilette")||stt.contains("Klo")) {
+            myItem = Licht_Bad
+        } else if (stt.contains("hue") || stt.contains("partyraum")) {
+            logInfo("VoiceControl", "Partyraum gefunden")
+            myItem = Licht_Partyraum
+        } else if (stt.contains("flur")) {
+            myItem = Licht_Flur
+        } else if(stt.contains("büro")) {
+            myItem = Licht_Buero
+        } else if(stt.contains("küche")) {
+            myItem = Licht_Kueche;
+        } else if(stt.contains("schlafzimmer")) {
+            myItem = Licht_Schlafzimmer
+        } else if(stt.contains("alle")){
+            myItem = Lights
+        } else {
+            logInfo("VoiceControl", "Kein entsprechendes Licht gefunden")
+        }
+    } else if (stt.contains("herd")) {
+        myItem = Herd
+    }
+    
+    if(myItem==null || newState==""){
+        logInfo("VoiceControl","Failed to recognize command")
+        sendCommand(VoiceCommandSuccess, OFF)
+        return
+    }
+   
+    logInfo("VoiceControl", "sending "+newState+" to "+myItem.name)
+    sendCommand(myItem, newState.toString)
+    success=1
+       
+    if (success==1){
+        logInfo("VoiceControl","Voice command succeeded")
+        sendCommand(VoiceCommandSuccess, ON)
+    }else{
+        logInfo("VoiceControl","Voice command failed")
+        sendCommand(VoiceCommandSuccess, OFF)
+    }
+end

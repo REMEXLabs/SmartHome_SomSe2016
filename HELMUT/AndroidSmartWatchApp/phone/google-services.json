@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "230845335716",
+    "project_id": "smarthome-db3b2"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230845335716:android:db9a7ed6cf2c269f",
+        "android_client_info": {
+          "package_name": "hdm.csm.smarthome"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL0MfQc3DRxevRNu_YudlQhTBfoIP_7tU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".watch.TestActivity"
+    tools:deviceIds="wear_round">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SEND MSG"
+        android:id="@+id/bnSendMessage"
+        android:layout_marginTop="29dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/bnCall"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VOICE REC."
+            android:id="@+id/bnVoiceAction"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" android:layout_below="@+id/bnSendMessage"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvRecognizedText"
+        android:layout_below="@+id/bnVoiceAction"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CALL"
+        android:id="@+id/bnCall"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tvRecognizedText"/>
+</RelativeLayout>

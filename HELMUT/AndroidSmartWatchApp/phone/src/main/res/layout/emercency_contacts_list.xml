@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context="hdm.csm.smarthome.phone.activities.ContactsView">
+
+    <android.support.design.widget.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_1"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </android.support.design.widget.AppBarLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="75dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:paddingBottom="2dp"
+    >
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/add_new_contact_label"
+                android:textColor="@color/colorPrimaryDark"
+                android:id="@+id/add_new_contact_label" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/name_label"
+                android:id="@+id/textView2"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editText"
+                android:layout_below="@+id/textView2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/mobil"
+                android:layout_alignEnd="@+id/mobil" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/number_label"
+                android:id="@+id/textView3"
+                android:layout_below="@+id/editText"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:id="@+id/mobil"
+                android:layout_gravity="center_horizontal"
+                android:layout_below="@+id/editText"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="18dp" />
+
+        </RelativeLayout>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_contact"
+                android:id="@+id/addpeter"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:drawableLeft="@android:drawable/ic_menu_add"
+                android:onClick="sendInput" />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/choose_contact_label"
+                android:paddingTop="15dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:id="@+id/choose_contact_label" />
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pick_contact"
+                android:id="@+id/pickcontact"
+                android:onClick="pickContact"
+                android:drawableLeft="@android:drawable/ic_menu_search"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+        />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/chosen_contacts_label"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:paddingTop="15dp"
+                    android:layout_marginRight="40dp"
+                    android:id="@+id/textView4" />
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/drop_table"
+                    android:id="@+id/dropTable"
+                    android:onClick="dropTable"
+                    android:layout_gravity="end"
+                    android:paddingRight="0dp"
+                    android:layout_marginRight="0dp"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+                    android:drawableLeft="@android:drawable/ic_menu_delete"
+            />
+        </LinearLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/android:list"
+            android:textFilterEnabled="true"/>
+        <![CDATA[
+
+
+        />
+
+    ]]>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

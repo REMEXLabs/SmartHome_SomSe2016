@@ -1,0 +1,34 @@
+Group All
+Group:Switch:OR(ON, OFF)        Lights      "All Lights [(%d)]"                                 (All)
+Group Watch                                                                                     (All)
+Group WatchfaceIndicators  
+                                                                 
+/*Enable String Commands*/
+String VoiceCommand
+
+/*Doorbell*/
+Contact Button_Front_Doorbell   "Doorbell"                  (Outdoor)                   { piface ="pifaceid1:IN:2" }
+Switch PiFaceWatchDog           "Watchdog"                  (Outdoor)                   { piface ="pifaceid1:WATCHDOG"}
+
+/*Watch*/
+Switch Vibration                "Watch Vibration"           (Watch)                     { channel="androidwear:watch:smarthome:vibration" }
+Switch VoiceCommandSuccess      "Watch VoicCommandSuccess"  (Watch)                     { channel="androidwear:watch:smarthome:voicecommand" }
+Color Indicator_1               "Watchface Indicator 1"     (WatchfaceIndicators)       { channel="androidwear:watch:smarthome:watchface_indicator_1" }
+Color Indicator_2               "Watchface Indicator 2"     (WatchfaceIndicators)       { channel="androidwear:watch:smarthome:watchface_indicator_2" }
+Color Indicator_3               "Watchface Indicator 3"     (WatchfaceIndicators)       { channel="androidwear:watch:smarthome:watchface_indicator_3" }
+Color Indicator_4               "Watchface Indicator 4"     (WatchfaceIndicators)       { channel="androidwear:watch:smarthome:watchface_indicator_4" }
+Color Indicator_5               "Watchface Indicator 5"     (WatchfaceIndicators)       { channel="androidwear:watch:smarthome:watchface_indicator_5" }
+Color Indicator_6               "Watchface Indicator 6"     (WatchfaceIndicators)       { channel="androidwear:watch:smarthome:watchface_indicator_6" }
+
+/*Hue*/
+Color Licht_Partyraum           "Partyraum"                 (Lights)                    { channel="hue:LST001:00178811dd2e:2:color" }
+
+/*Demolights*/
+Switch Herd "Herd"
+Switch Licht_Wohnzimmer         "Wohnzimmer"                (Lights)
+Switch Licht_Schlafzimmer       "Schlafzimmer"              (Lights)
+Switch Licht_Kueche             "Küche"                     (Lights)
+Switch Licht_Flur               "Flur"                      (Lights)
+Switch Licht_Bad                "Bad"                       (Lights)
+Switch Licht_Buero              "Büro"                      (Lights)
+Switch HueHelper                "df"                        (Lights)

@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Smarthome</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="gcm_registration_error">Could not get GCM token.</string>
+    <string name="title_activity_setup">SH Setup</string>
+    <!-- Helmut Notfallkontakte -->
+    <string name="title_activity_contacts">Helmut Hilferuf-Kontakte</string>
+    <string name="pick_contact">Kontakt suchen</string>
+    <string name="add_contact">Kontakt hinzufügen</string>
+    <string name="drop_table">Liste leeren</string>
+    <string name="number_label">Telefonnummer</string>
+    <string name="name_label">Name</string>
+    <string name="chosen_contacts_label">Hilferuf-Kontakte</string>
+    <string name="add_new_contact_label">Neuen Kontakt hinzufügen</string>
+    <string name="choose_contact_label">Kontakt im Telefonbuch suchen</string>
+
+</resources>

@@ -1,0 +1,32 @@
+sitemap smarthome label="Ingoberts SmartHome" {
+    Frame label="AndroidWear" {
+       Switch item=Vibration mappings=[ON="Vibrate"]
+       Switch item=VoiceCommandSuccess mappings=[ON="true"]
+       Colorpicker item=Indicator_1 label="Watchface Indicator 1"
+       Colorpicker item=Indicator_2 label="Watchface Indicator 2"
+       Colorpicker item=Indicator_3 label="Watchface Indicator 3"
+       Colorpicker item=Indicator_4 label="Watchface Indicator 4"
+       Colorpicker item=Indicator_5 label="Watchface Indicator 5"
+       Colorpicker item=Indicator_6 label="Watchface Indicator 6"
+
+    }
+    
+    Frame label="Hue"{
+        Switch item=Licht_Partyraum label="Partyraum"
+        Colorpicker item=Licht_Partyraum label="Partyraum"
+    }
+    
+    Frame label="Lichter" {
+        Switch item=Licht_Wohnzimmer         label="Wohnzimmer"    
+        Switch item=Licht_Schlafzimmer       label="Schlafzimmer"      
+        Switch item=Licht_Kueche             label="Küche"         
+        Switch item=Licht_Flur               label="Flur"      
+        Switch item=Licht_Bad                label="Bad"     
+        Switch item=Licht_Buero              label="Büro"    
+        Switch item=Lights                   label="Alle Lichter"  
+    }
+    
+    Frame label="Sonstiges"{
+        Switch item=Herd label "Herd"
+    }
+}

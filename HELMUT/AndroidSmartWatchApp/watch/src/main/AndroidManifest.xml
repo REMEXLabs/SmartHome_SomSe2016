@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="hdm.csm.smarthome"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-feature android:name="android.hardware.type.watch"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <!-- permissions for the WatchFace -->
+    <uses-permission android:name="com.google.android.permission.PROVIDE_BACKGROUND" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="false"
+        android:theme="@android:style/Theme.DeviceDefault">
+        <activity
+            android:name=".watch.activities.TestActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <service android:name=".watch.services.PhoneListenerService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER"/>
+                <!-- listeners receive events that match the action and data filters -->
+                <!-- <action android:name="com.google.android.gms.wearable.DATA_CHANGED" /> -->
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED"/>
+                <!-- <action android:name="com.google.android.gms.wearable.CAPABILITY_CHANGED" /> -->
+                <!-- <action android:name="com.google.android.gms.wearable.CHANNEL_EVENT" /> -->
+                <!-- <data android:scheme="wear" android:host="*" android:pathPrefix="/prefix" /> -->
+            </intent-filter>
+        </service>
+
+        <service
+                android:name=".watch.services.HelmutWatchfaceService"
+                android:label="@string/analog_name"
+                android:permission="android.permission.BIND_WALLPAPER" >
+            <meta-data
+                    android:name="android.service.wallpaper"
+                    android:resource="@xml/watch_face" />
+            <meta-data
+                    android:name="com.google.android.wearable.watchface.preview"
+                    android:resource="@drawable/watchface_background_helmut" />
+            <meta-data
+                    android:name="com.google.android.wearable.watchface.preview_circular"
+                    android:resource="@drawable/watchface_background_helmut" />
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+                <category
+                        android:name=
+                                "com.google.android.wearable.watchface.category.WATCH_FACE" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".watch.activities.NotificationActivity"
+            android:label="@string/title_activity_bell"
+
+            >
+        </activity>
+        <activity
+            android:name=".watch.activities.VoiceCommandSuccessActivity"
+            android:label="@string/title_activity_bell"
+
+            >
+        </activity>
+        <activity
+            android:name=".watch.activities.VoiceCommandFailedActivity"
+            android:label="@string/title_activity_bell"
+
+            >
+        </activity>
+        <activity
+            android:name=".watch.activities.VoiceRecognitionActivity"
+            android:label="@string/title_activity_bell">
+        </activity>
+    </application>
+
+</manifest>

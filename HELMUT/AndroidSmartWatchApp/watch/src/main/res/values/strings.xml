@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SmartHome</string>
+    <string name="hello_round">Hello Round World!</string>
+    <string name="hello_square">Hello Square World!</string>
+    <string name="voice_recognition_failed">could not recognize voice</string>
+    <string name="title_activity_bell">BellActivity</string>
+    <string name="analog_name">Helmut</string>
+</resources>

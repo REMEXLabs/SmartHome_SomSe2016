@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="hdm.csm.smarthome.phone.activities.TestActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </android.support.design.widget.AppBarLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="100dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="start setup"
+            android:id="@+id/bnStartSetup"
+            android:layout_gravity="center_horizontal"/>
+
+        <GridLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:columnCount="2"
+            android:rowCount="4">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OpenHAB-Service:"
+                android:id="@+id/textView5"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:layout_marginBottom="20dp"
+                android:layout_columnWeight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GCM-ID:"
+                android:id="@+id/textView6"
+                android:layout_column="0"
+                android:layout_row="1"
+                android:layout_marginBottom="20dp"
+                android:layout_columnWeight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OpenHAB-Setup:"
+                android:id="@+id/textView7"
+                android:layout_column="0"
+                android:layout_row="2"
+                android:layout_marginBottom="30dp"
+                android:layout_columnWeight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="current action:"
+                android:id="@+id/textView8"
+                android:layout_column="0"
+                android:layout_row="3"
+                android:textStyle="bold"
+                android:layout_columnWeight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="N/A"
+                android:id="@+id/tvOpenHabService"
+                android:layout_column="1"
+                android:layout_row="0"
+                android:layout_marginBottom="20dp"
+                android:layout_columnWeight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="N/A"
+                android:id="@+id/tvGcmId"
+                android:layout_column="1"
+                android:layout_row="1"
+                android:layout_marginBottom="20dp"
+                android:layout_columnWeight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="N/A"
+                android:id="@+id/tvOpenHabSetup"
+                android:layout_column="1"
+                android:layout_row="2"
+                android:layout_marginBottom="30dp"
+                android:layout_columnWeight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="N/A"
+                android:id="@+id/tvCurrentAction"
+                android:layout_column="1"
+                android:layout_row="3"
+                android:textStyle="bold"
+                android:layout_columnWeight="1"/>
+        </GridLayout>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/etLog"
+            android:layout_marginTop="50dp"
+            android:lines="5"
+            android:editable="false"
+            android:enabled="false"/>
+
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

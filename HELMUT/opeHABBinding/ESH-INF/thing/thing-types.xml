@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="androidwear"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
+        xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+
+    <thing-type id="watch">
+        <label>AndroidWear Watch</label>
+        <description>A Smartwatch running AndroidWear</description>
+
+        <channels>
+            <channel id="vibration" typeId="vibration"/>
+            <channel id="watchface_indicator_1" typeId="watchface_indicator"/>
+            <channel id="watchface_indicator_2" typeId="watchface_indicator"/>
+            <channel id="watchface_indicator_3" typeId="watchface_indicator"/>
+            <channel id="watchface_indicator_4" typeId="watchface_indicator"/>
+            <channel id="watchface_indicator_5" typeId="watchface_indicator"/>
+            <channel id="watchface_indicator_6" typeId="watchface_indicator"/>
+        </channels>
+        
+        <config-description>
+            <parameter name="gcmid" type="text" required="true">
+                <label>Device ID</label>
+                <description>GCM-ID of the smartphone the watch is connected to
+                </description>
+            </parameter>
+        </config-description>
+    </thing-type>
+
+    <channel-type id="vibration">
+        <item-type>Switch</item-type>
+        <label>Vibration</label>
+        <description>Triggers vibration of the Smartwatch when set to ON</description>
+    </channel-type>
+    <channel-type id="watchface_indicator">
+        <item-type>Color</item-type>
+        <label>Watchface Indicator</label>
+        <description>An indicator shown on the watchface of the Smartwatch</description>
+    </channel-type>
+</thing:thing-descriptions>
