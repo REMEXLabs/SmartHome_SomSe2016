@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<settings>
+  <person>
+    <id>3</id>
+    <firstname>Luise</firstname>
+    <lastname>Insel</lastname>
+    <yearOfBirth>1950</yearOfBirth>
+    <address>Asperg, Deutschland</address>
+    <phone>0711 0815</phone>
+    <floorid>02f0</floorid>
+  </person>
+  <contact>
+    <firstname>Anna</firstname>
+    <lastname>Insel</lastname>
+    <address>Bad Cannstatt, Stuttgart, Deutschland</address>
+    <phone>0711 4483</phone>
+    <email>anna.insel@web.de</email>
+  </contact>
+  <living>
+    <alone>true</alone>
+    <walker>false</walker>
+    <pets>false</pets>
+    <fall>true</fall>
+    <dizziness>true</dizziness>
+  </living>
+</settings>
