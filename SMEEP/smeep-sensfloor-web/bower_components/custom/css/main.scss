@@ -1,0 +1,109 @@
+$green: 	#028964;
+
+
+
+body{
+	background-color: $green;
+}
+
+.main {
+	background-color: #FFF;
+	min-height: calc(100vh - 140px);
+	box-shadow: 10px 10px 91px 0px rgba(0,0,0,0.3);
+	margin-top: 140px;
+	margin-bottom: 0px;
+	padding-bottom: 15px;
+	padding-top: 15px;
+}
+
+
+h1{
+	margin-bottom: 30px;
+}
+
+.navbar-brand{
+	padding: 25px;
+	.logo{
+		height: 50px;
+	}
+}
+
+.time{
+	padding: 30px;
+}
+
+.wrapper{
+	height: 100%;
+	padding: 50px 0px;
+}
+
+.equal {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.equal > div[class*='col-'] {  
+  display: flex;
+  flex-direction: column;
+}
+
+
+.steps{
+	height: 100px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    text-align: center;
+	.one, .two, .three, .four, .five{
+		display: inline-block;
+		vertical-align: middle;
+		width: 70px;
+		height: 70px;
+		border-radius: 100%;
+		margin: 15px 40px;
+		.inner{
+			display: block;
+			height: 70px;
+			line-height: 70px;
+			text-align: center;
+			font-size: 40px;
+			color: $green;
+			&:hover{
+				text-decoration: none !important;
+			}
+		}
+		&:after{ 
+		    content: " ";
+		    display: inline-block;
+		    width:85px;
+		    height: 6px;
+		    position: relative;
+		    top:-47px;
+		    left: 64px;
+		    background-color: $green;
+		}
+		&:last-child:after{
+		  opacity: 0; 
+		}
+				
+	}
+	.non-active{
+		border: 4px solid $green;
+		.inner{
+			line-height: 62px;
+		}
+		&:after{ 
+			top:-51px;
+		}
+	}
+	
+	.active{
+		background-color: $green;	
+	    .inner{
+		    color: white;
+	    }	
+		&:after { 
+			left: 66px;
+		}
+	}
+}

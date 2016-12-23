@@ -1,0 +1,29 @@
+extends ./layout.jade
+
+block title
+	title Smeep | Tutorial (Einstieg)
+
+block content
+	nav.navbar.navbar-default.navbar-fixed-top
+		.container
+			.row
+				.col-md-2
+					a.navbar-brand(href='/')
+						img.logo(alt='Smeep', src='/img/logo.png')
+				.col-md-8.steps
+					.one.active
+						a.inner(href='/tutorial_one') 1
+					.two.non-active
+						a.inner(href='/tutorial_two') 2
+					.three.non-active
+						a.inner(href='/settings') 3
+					.four.non-active
+						a.inner(href='/tutorial_end') 4							
+	.container.main
+		.row
+			.col-md-6.col-md-offset-3
+				h1.text-center Willkommen bei Smeep.
+				p.lead.text-center In den nächsten Minuten werden wir gemeinsam ihr Smeep-System auf Ihre Bedürfnisse anpassen.
+				br
+				p.text-center
+					a.text-center.btn.btn-default.btn-lg(href='/tutorial_two') Jetzt mit der Einrichtung beginnen

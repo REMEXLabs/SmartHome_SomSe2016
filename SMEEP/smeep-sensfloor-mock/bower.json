@@ -1,0 +1,20 @@
+{
+  "name": "sensfloormock",
+  "description": "Bower things for sensfloormock",
+  "main": "index.js",
+  "authors": [
+    "tderleth <thomas.derleth@me.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.3"
+  }
+}

@@ -1,0 +1,218 @@
+extends ./layout.jade
+
+block title
+	title Smeep | Tutorial (Funktionen)
+
+block content
+	nav.navbar.navbar-default.navbar-fixed-top
+		.container
+			.row
+				.col-md-2
+					a.navbar-brand(href='/')
+						img.logo(alt='Smeep', src='/img/logo.png')
+				.col-md-8.steps
+					.one.active
+						a.inner(href='/tutorial_one') 1
+					.two.active
+						a.inner(href='/tutorial_two') 2
+					.three.active
+						a.inner(href='/settings') 3
+					.four.non-active
+						a.inner(href='/tutorial_end') 4						
+	.container.main
+		.row.equal
+			.col-md-6.col-md-offset-3
+				h1.text-center Funktionen von Smeep auswählen.
+				p.lead.text-center Smeep besteht aus drei Phasen, die einzeln aktivierbar sind.  
+				br
+				p.lead.text-center
+					strong Bitte wählen Sie die gewünschten Funktionen aus 
+					br 
+					strong und passen Sie die dazugehörigen Einstellungen auf Ihre Bedürfnisse an.
+		hr
+		.row.equal
+			.col-md-9.col-md-offset-1
+				h2 Alle Funktionen aktivieren
+				p.lead Aktvieren oder deaktivieren Sie alle unten stehenden Funktionen von Smeep.
+			.col-md-2
+				.field.check-round.slide
+					input(type='checkbox', name='toggle_all', id='toggle_all', onclick='toggle("io_toggle_all", this);')
+					label(for='toggle_all')
+						span 
+
+		hr
+		.row.equal
+			.col-md-9.col-md-offset-1
+				h2 Abends
+				p.lead Smeep bietet eine Einschlafhilfe. Sie stellen ein, wann Sie schlafen gehen und Smeep dimmt im Laufe des Abends das Licht, damit Sie müde werden.
+			.col-md-2
+				.field.check-round.slide
+					input(type='checkbox', name='toggle_evening', id='toggle_evening', onclick='toggle("io_toggle_evening", this);')
+					label(for='toggle_evening')
+						span
+
+		.row.equal#sleepingtime
+			.col-md-9.col-md-offset-1
+				h4 Schlafenszeit einstellen
+				p.lead Geben Sie an, zu welcher Uhrzeit Sie normalerweise abends zu Bett gehen.
+			.col-md-2
+				.field.time
+					.input-group.clockpicker-bedtime
+						input.form-control(type='time', id='bedtime' , onBlur='set_time("bedtime");')
+						span.input-group-addon
+							span.glyphicon.glyphicon-time
+
+		hr
+		.row.equal
+			.col-md-9.col-md-offset-1
+				h2 Morgens
+				p.lead Möchten Sie nicht mehr von Ihrem lauten Wecker abrupt aus dem Schlaf gerissen werden, weckt Smeep Sie sanft mit einem simulierten Sonnenaufgang. So starten Sie erholt in den Tag!
+			.col-md-2
+				.field.check-round.slide
+					input(type='checkbox', name='toggle_morning' id='toggle_morning', onclick='toggle("io_toggle_morning", this);')
+					label(for='toggle_morning')
+						span
+
+		.row.equal#morningtime
+			.col-md-9.col-md-offset-1
+				h4 Weckzeit einstellen
+				p.lead Geben Sie an, zu welcher Uhrzeit Sie normalerweise morgens aufstehen.
+			.col-md-2
+				.field.time
+					.input-group.clockpicker-wakeuptime
+						input.form-control(type='time', id='wakeuptime', onBlur='set_time("wakeuptime");')
+						span.input-group-addon
+							span.glyphicon.glyphicon-time
+
+
+		hr
+		.row.equal
+			.col-md-9.col-md-offset-1
+				h2 Nachts
+				p.lead Müssen Sie nachts aufstehen, erkennt Smeep Ihren Laufweg und sorgt für eine atmosphärische Beleuchtung, ohne dass Sie einen Schalter betätigen müssen.
+			.col-md-2
+				.field.check-round.slide
+					input(type='checkbox', name='toggle_night' id='toggle_night', onclick='toggle("io_toggle_night", this);')
+					label(for='toggle_night')
+						span
+
+		.row.equal#nighttime
+			.col-md-9.col-md-offset-1
+				h4 Position des Bettes bestimmen
+				p.lead Um die Nacht-Funktion von Smeep nutzen zu können, müssen Sie Smeep sagen, wo ihr Bett steht. Bitte stellen Sie sich jetzt direkt vor ihrem Bett auf den Smeep-Teppich. Bitte bleiben Sie so lange stehen, bis die Lampe grün leuchtet.
+			.col-md-2
+				.wrapper
+					#countdown.lead.text-center(style='display:none')
+						span#minutes 00
+						span :
+						span#seconds 00
+						
+					p.text-center
+						input#start_timer.btn.btn-default.btn-lg(type='button', onclick='start_reference();', value="Jetzt starten")
+			
+		hr
+		.row
+			.col-md-12
+				p.text-center
+					a.text-center.btn.btn-default.btn-lg(href='/tutorial_two', style='margin-right:20px') zurück
+					a.text-center.btn.btn-default.btn-lg(href='/tutorial_end') weiter
+					
+block script	
+	script.
+		var socket = io.connect("http://raspberrypi:3000");
+		
+		socket.on('settings_config', function(data) {
+			
+			if(data.toggle_evening == true && data.toggle_morning == true && data.toggle_night == true){
+				document.getElementById("toggle_all").checked = true;				
+			}
+			else{
+				document.getElementById("toggle_all").checked = false;								
+			}
+						
+			document.getElementById("toggle_evening").checked = data.toggle_evening;
+			if(data.toggle_evening == false){
+				$("#sleepingtime").slideUp( "fast" );
+			}
+			else{
+				$("#sleepingtime").slideDown( "fast" );				
+			}
+			document.getElementById("toggle_morning").checked = data.toggle_morning;
+			if(data.toggle_morning == false){
+				$("#morningtime").slideUp( "fast" );
+			}
+			else{
+				$("#morningtime").slideDown( "fast" );				
+			}
+			document.getElementById("toggle_night").checked = data.toggle_night;
+			if(data.toggle_night == false){
+				$("#nighttime").slideUp( "fast" );
+			}
+			else{
+				$("#nighttime").slideDown( "fast" );				
+			}
+			document.getElementById("toggle_night").checked = data.toggle_night;
+			document.getElementById("wakeuptime").value = data.wakeuptime;
+			document.getElementById("bedtime").value = data.bedtime;
+			console.log(data);
+		});
+		
+		function toggle(name, checkbox){
+			if(checkbox.checked){state = true;}
+			else{state = false;}
+			socket.emit(name , state );
+		}
+		
+		function set_time(name){
+			var time = document.getElementById(name).value;
+			console.log(time + name);
+			socket.emit(name , time );
+		}
+		
+		function start_reference(){
+
+			$("#start_timer").hide();
+			$("#countdown").show();
+	        			
+			var sTime = new Date().getTime();
+			var countDown = 10;
+			
+			function UpdateTime() {
+			    var cTime = new Date().getTime();
+			    var diff = cTime - sTime;
+			    var seconds = countDown - Math.floor(diff / 1000);
+			    if (seconds >= 0) {
+			        var minutes = Math.floor(seconds / 60);
+			        seconds -= minutes * 60;
+			        $("#minutes").text(minutes < 10 ? "0" + minutes : minutes);
+			        $("#seconds").text(seconds < 10 ? "0" + seconds : seconds);
+			    } else {
+			        $("#countdown").hide();
+					$("#start_timer").show();
+					$("#start_timer").prop('value', 'Neu starten');
+			        clearInterval(counter);
+			    }
+			}
+			UpdateTime();
+			var counter = setInterval(UpdateTime, 500);
+			
+			console.log("started reference on client");
+			socket.emit("start_reference");
+		}
+
+	script(type='text/javascript').
+		$('.clockpicker-bedtime').clockpicker({
+		donetext: 'Fertig',
+		afterDone: function() {
+			console.log("after done");
+			set_time("bedtime");
+		}
+		});
+
+		$('.clockpicker-wakeuptime').clockpicker({
+		donetext: 'Fertig',
+		afterDone: function() {
+			console.log("after done");
+			set_time("wakeuptime");
+		}
+		});

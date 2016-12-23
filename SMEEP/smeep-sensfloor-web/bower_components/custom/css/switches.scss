@@ -1,0 +1,108 @@
+$red: #E74C3C;
+$green: #028964;
+
+/** Switch **/
+.form-fields {
+  background: #ecf0f1;
+  border: 1px solid #bdc3c7;
+}
+
+.form-fields .all{
+  background: #4c4c4c;
+  border: 1px solid #bdc3c7;
+}
+
+.form-fields  li {
+  	list-style-type: none;
+}
+
+.field {
+  padding: 15px;
+  border-top: 1px solid #bdc3c7;
+}
+
+.field:first-child {
+  border-top: none;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+.field {
+  display: relative;
+}
+
+.time{
+  position: relative;
+  float: right;
+}
+
+.field label {
+  position: relative;
+  line-height: 32px;
+  display: block;
+}
+
+.field label:before,
+.field label:after,
+.field label span:before,
+.field label span:after {
+  content: '';
+  display: block;
+  position: absolute;
+}
+
+.field label span {
+  position: relative;
+  cursor: pointer;
+  display: block;
+  float: right;
+}
+
+/** Global Variables **/
+.check-round label span {
+  border-radius: 32px;
+  height: 64px;
+  width: 128px;
+}
+
+.check-round label span:before {
+  border-radius: 50%;
+  height: 56px;
+  width: 56px;
+  left: 4px;
+  top: 4px;
+}
+
+.check-round input:checked + label span:before {
+  left: 68px;
+}
+
+.check-round.slide label span {
+  background: $red;
+  transition: background 0.15s ease-in;
+}
+
+.check-round.slide label span:before {
+  background: #ECF0F1;
+  transition: left 0.15s ease-in;
+}
+
+.check-round.slide input:checked + label span {
+  background: $green;
+}
+
+.check-round.slide-inverse label span {
+  background: #ECF0F1;
+  border: 1px solid #bdc3c7;
+}
+
+.check-round.slide-inverse label span:before {
+  background: $red;
+  transition: left 0.15s ease-in, background 0.15s ease-in;
+}
+
+.check-round.slide-inverse input:checked + label span:before {
+  background: $green;
+}

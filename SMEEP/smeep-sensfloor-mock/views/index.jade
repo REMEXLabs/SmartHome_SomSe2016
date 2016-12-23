@@ -1,0 +1,83 @@
+doctype html
+html(lang='en')
+	head
+		style.
+			.button{outline: 0.5px solid #ecf0f1;}
+		link(rel='stylesheet', type='text/css', href='/bootstrap/dist/css/bootstrap.min.css')
+		script(src='/jquery/dist/jquery.js')
+	body
+		.container-fluid
+			.row
+		script(src='/socket.io/socket.io.js')
+		
+	script.
+		<!-- initialise current position-->
+		var position = [];
+		<!-- load ENV-->
+		var env_vars = !{JSON.stringify(env_vars)};
+		
+		<!-- Set CSS depending on number of Tiles-->
+		var css_width = 100 / Math.abs(env_vars.width_from - env_vars.width_to) + "vw";
+		var css_heigth =  100 / Math.abs(env_vars.height_from - env_vars.height_to) + "vh";
+
+		<!-- Set new CSS-->
+		var css = document.createElement("style");
+		css.type = "text/css";
+		css.innerHTML = ".button { width:"+css_width+"; height:"+css_heigth+"}";
+		document.body.appendChild(css);
+		
+		<!-- Append tile-elements to grid-->
+		for(y = env_vars.height_from ; y < env_vars.height_to ; y++){
+			for (x = env_vars.width_from ; x < env_vars.width_to ; x++){
+				$( ".row" ).append( "<div class='col-xs-2 button' id='element_"+x+"_"+y+"'>&nbsp;</div>" );	
+			}	
+			$( ".row" ).append( "<br>" );	
+		}
+
+		<!-- connect to server-->
+		var socket = io.connect(env_vars.server);	
+		
+		<!-- initialise listener for cluster-event-->
+		socket.on('cluster', function(data) {
+			console.log(data);
+		}); 
+		<!-- initialise listener for position-event-->
+		socket.on('position', function(data) {
+			
+			position = data;
+			
+			<!-- color every tile in default colors-->
+			for(y = env_vars.height_from ; y < env_vars.height_to ; y++){
+				for (x = env_vars.width_from ; x < env_vars.width_to ; x++){
+					var id = "#element_"+x+"_"+y;
+					$(id).css( "background-color", "#2c3e50" );		
+				}	
+			}
+			
+			<!-- color current position in highlighted color-->
+			var id = "#element_"+position[0]+"_"+position[1];
+			$(id).css( "background-color", "#ecf0f1" );
+		}); 	
+		
+		<!--  key-functions-->
+		document.onkeydown = function(e) {
+		    switch (e.keyCode) {
+		        case 37:
+		        	position[0]--; 
+		            socket.emit('move', position);
+		            break;
+		        case 38:
+		        	position[1]--; 
+		            socket.emit('move', position );
+		            break;
+		        case 39:
+		        	position[0]++; 
+		            socket.emit('move', position);
+		            break;
+		        case 40:
+			        position[1]++; 
+					socket.emit('move', position );
+		            break;
+		    }
+		};
+	

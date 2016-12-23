@@ -1,0 +1,33 @@
+extends ./layout.jade
+
+block title
+	title Smeep | Tutorial (Glühbirne)
+
+block content
+	nav.navbar.navbar-default.navbar-fixed-top
+		.container
+			.row
+				.col-md-2
+					a.navbar-brand(href='/')
+						img.logo(alt='Smeep', src='/img/logo.png')
+				.col-md-8.steps
+					.one.active
+						a.inner(href='/tutorial_one') 1
+					.two.active
+						a.inner(href='/tutorial_two') 2
+					.three.non-active
+						a.inner(href='/settings') 3
+					.four.non-active
+						a.inner(href='/tutorial_end') 4			
+	.container.main
+		.row
+			.col-md-6.col-md-offset-3
+				h1.text-center Glühbirne eindrehen.
+				p.lead.text-center Um Smeep nutzen zu können, müssen Sie zunächst die aktuelle Glühbirne im Schlafzimmer mit der mitgelieferten Glühbirne austauschen. 
+				br
+				p.lead.text-center
+					strong Bitte tauschen Sie nun die Glühbirnen aus. Anschließend schalten Sie bitte die Lampe an.
+				br
+				p.text-center
+					a.text-center.btn.btn-default.btn-lg(href='/tutorial_one', style='margin-right:20px') zurück
+					a.text-center.btn.btn-default.btn-lg(href='/settings') weiter

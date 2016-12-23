@@ -1,0 +1,101 @@
+/* line 5, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+body {
+  background-color: #028964; }
+
+/* line 9, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+.main {
+  background-color: #FFF;
+  min-height: calc(100vh - 140px);
+  box-shadow: 10px 10px 91px 0px rgba(0, 0, 0, 0.3);
+  margin-top: 140px;
+  margin-bottom: 0px;
+  padding-bottom: 15px;
+  padding-top: 15px; }
+
+/* line 20, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+h1 {
+  margin-bottom: 30px; }
+
+/* line 24, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+.navbar-brand {
+  padding: 25px; }
+  /* line 26, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+  .navbar-brand .logo {
+    height: 50px; }
+
+/* line 31, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+.time {
+  padding: 30px; }
+
+/* line 35, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+.wrapper {
+  height: 100%;
+  padding: 50px 0px; }
+
+/* line 40, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+.equal {
+  display: flex;
+  flex-wrap: wrap; }
+
+/* line 45, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+.equal > div[class*='col-'] {
+  display: flex;
+  flex-direction: column; }
+
+/* line 51, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+.steps {
+  height: 100px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  text-align: center; }
+  /* line 57, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+  .steps .one, .steps .two, .steps .three, .steps .four, .steps .five {
+    display: inline-block;
+    vertical-align: middle;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    margin: 15px 40px; }
+    /* line 64, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+    .steps .one .inner, .steps .two .inner, .steps .three .inner, .steps .four .inner, .steps .five .inner {
+      display: block;
+      height: 70px;
+      line-height: 70px;
+      text-align: center;
+      font-size: 40px;
+      color: #028964; }
+      /* line 71, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+      .steps .one .inner:hover, .steps .two .inner:hover, .steps .three .inner:hover, .steps .four .inner:hover, .steps .five .inner:hover {
+        text-decoration: none !important; }
+    /* line 75, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+    .steps .one:after, .steps .two:after, .steps .three:after, .steps .four:after, .steps .five:after {
+      content: " ";
+      display: inline-block;
+      width: 85px;
+      height: 6px;
+      position: relative;
+      top: -47px;
+      left: 64px;
+      background-color: #028964; }
+    /* line 85, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+    .steps .one:last-child:after, .steps .two:last-child:after, .steps .three:last-child:after, .steps .four:last-child:after, .steps .five:last-child:after {
+      opacity: 0; }
+  /* line 90, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+  .steps .non-active {
+    border: 4px solid #028964; }
+    /* line 92, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+    .steps .non-active .inner {
+      line-height: 62px; }
+    /* line 95, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+    .steps .non-active:after {
+      top: -51px; }
+  /* line 100, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+  .steps .active {
+    background-color: #028964; }
+    /* line 102, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+    .steps .active .inner {
+      color: white; }
+    /* line 105, /Volumes/Macintosh HD/Users/thomasderleth/Sites/sensfloor-web/bower_components/custom/css/main.scss */
+    .steps .active:after {
+      left: 66px; }

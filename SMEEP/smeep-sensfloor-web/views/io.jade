@@ -1,0 +1,65 @@
+extends ./layout.jade
+
+block title
+	title Smeep | Tutorial (Glühbirne)
+
+block content
+	nav.navbar.navbar-default.navbar-fixed-top
+		.container
+			.row
+				.col-md-2
+					a.navbar-brand(href='/')
+						img.logo(alt='Smeep', src='/img/logo.png')
+				.col-md-8.steps
+					.one.active
+						a.inner(href='/tutorial_one') 1
+					.two.active
+						a.inner(href='/tutorial_two') 2
+					.three.non-active
+						a.inner(href='/settings') 3
+					.four.non-active
+						a.inner(href='/tutorial_end') 4			
+	.container.main
+		.row
+			.col-md-2
+				p.text-center.lead Toggle Licht
+		.row
+			.col-md-2
+				.field.check-round.slide
+					input(type='checkbox', name='hue', id='hue', onclick='emit_status(this);')
+					label(for='hue')
+						span 
+
+block script	
+	script.
+		
+		var socket = io.connect("http://raspberrypi:3000");
+		
+		socket.on('get_status_hue', function(data) {
+		
+			console.log(data);
+				
+			if(data == "ON"){
+				console.log("turn toggle on");
+				document.getElementById("hue").checked = true;				
+			}
+			else{
+				console.log("turn toggle off");
+				document.getElementById("hue").checked = false;				
+			}
+			
+		});
+		
+		function emit_status(toggle){
+			
+			if(toggle.checked){
+				status="ON";
+			}
+			else{
+				status="OFF";
+			}
+			
+			socket.emit("set_status_hue" , status );
+			
+		}
+		
