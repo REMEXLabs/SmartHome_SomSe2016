@@ -1,0 +1,316 @@
+  <head>
+  	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <style>
+div.bo {
+    width:60%;
+    margin: auto;
+}
+
+table, td {
+vertical-align:middle;
+}
+</style>
+  </head>
+    
+<body>
+    <div id="authorize-div" style="display: none">
+      <span>Authorize access to Google Calendar API</span>
+      <!--Button for the user to click to initiate auth sequence -->
+      <button id="authorize-button" onclick="handleAuthClick(event)">
+        Authorize
+      </button>
+    </div>
+    
+           <div class="row">
+
+                <div class="col-lg-12" id="anzfeld">
+                    <article>
+				<div class="col-lg-12" align="center">
+                    <img width="80" height=80" src="img/pills-blue.png"><h1 class="page-header"><font style="font-size:90px;color:#0015ff;text-shadow:2px 2px 3px rgba(0,0,0,0.3)"> Smart MediCine</font></h1>
+                </div>
+    <div>
+    
+<br><br>
+<div class="bo">
+
+    <hr>
+ <table align='center' valign='middle' class="table table-hover table-striped" id="bootstrap-table" style="cellpadding:10">
+			<thead>
+			<tr>
+				<th><font size='5'>Farbe</font></th>
+				<th><font size='5'>Krankheit</font></th>
+		        <th><font size='5'>Medikament</font></th>
+		        <th><font size='5'>Datum</font></th>
+		        <th><font size='5'>Zeit</font></th>
+		        <th><font size='5'>Bearbeiten</font></th>
+		     </tr>
+		     </thead>
+		     <tbody id="tbodyMedicineList">
+	
+		     </tbody>
+			
+
+
+		 </table>
+<br>
+<button style="height:60px; width:150px" onClick="back()" class='btn btn-primary'><font style="font-size:16px">zurück</font></button></td>
+	
+	
+</div>
+
+</article>
+
+
+
+
+
+
+    
+    <script type="text/javascript">
+      // Your Client ID can be retrieved from your project in the Google
+      // Developer Console, https://console.developers.google.com
+      //var CLIENT_ID = '964242476289-2tua7gt8lf9r9sr6deavpcb1aovgsgkq.apps.googleusercontent.com';
+	 var CLIENT_ID = '1013497704000-uolinpa3cgtn1n2gr24qtdt379f867go.apps.googleusercontent.com';
+      var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+      var arrCalendarResults = [];
+      var objCalendarResults;
+      var arrSingelEvents = [];
+
+      /**
+       * Check if current user has authorized this application.
+       */
+      function checkAuth() {
+        gapi.auth.authorize(
+          {
+            'client_id': CLIENT_ID,
+            'scope': SCOPES.join(' '),
+            'immediate': true
+          }, handleAuthResult);
+      }
+
+      /**
+       * Handle response from authorization server.
+       *
+       * @param {Object} authResult Authorization result.
+       */
+      function handleAuthResult(authResult) {
+        var authorizeDiv = document.getElementById('authorize-div');
+        if (authResult && !authResult.error) {
+          // Hide auth UI, then load client library.
+          authorizeDiv.style.display = 'none';
+          loadCalendarApi();
+        } else {
+          // Show auth UI, allowing the user to initiate authorization by
+          // clicking authorize button.
+          authorizeDiv.style.display = 'inline';
+        }
+      }
+
+      /**
+       * Initiate auth flow in response to user clicking authorize button.
+       *
+       * @param {Event} event Button click event.
+       */
+      function handleAuthClick(event) {
+        gapi.auth.authorize(
+          {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
+          handleAuthResult);
+        return false;
+      }
+
+      /**
+       * Load Google Calendar client library. List upcoming events
+       * once client library is loaded.
+       */
+      function loadCalendarApi() {
+        gapi.client.load('calendar', 'v3', listUpcomingEvents);
+      }
+
+      /**
+       * Print the summary and start datetime/date of the next ten events in
+       * the authorized user's calendar. If no events are found an
+       * appropriate message is printed.
+       */
+      function listUpcomingEvents() {
+        var request = gapi.client.calendar.events.list({
+          'calendarId': 'primary',
+          'timeMin': (new Date()).toISOString(),
+          'showDeleted': false,
+          'singleEvents': true,
+          'maxResults': 10,
+          'orderBy': 'startTime'
+        });
+
+        request.execute(function(resp) {
+	      var map = {};
+          var events = resp.items;
+          if (events.length > 0) {
+            for (i = 0; i < events.length; i++) {
+              var event = events[i];
+              var when = event.start.dateTime;
+              if (!when) {
+                when = event.start.date;
+              }
+              objCalendarResults = new Object();
+          	  var krankheit = event.summary.substr(0, event.summary.indexOf("//"));
+              var medikament = event.summary.substr(event.summary.indexOf("//")+2, event.summary.length);
+              var einnahme = when;
+              
+	          objCalendarResults.krankheit = krankheit;
+	          objCalendarResults.medikament = medikament;
+	          objCalendarResults.einnahmen = einnahme;
+              arrCalendarResults.push(objCalendarResults);
+              
+              
+              var d = new Date(einnahme);
+			  var objMedikamentInformation = new Object();
+              
+              
+              var weekday = new Array(7);
+              weekday[0] = "Sonntag";
+              weekday[1] = "Montag";
+              weekday[2] = "Dienstag";
+              weekday[3] = "Mittwoch";
+              weekday[4] = "Donnerstag";
+              weekday[5] = "Freitag";
+              weekday[6] = "Samstag";
+
+              var n = weekday[d.getDay()];
+              var minutes = "";
+              var hours = "";
+              var day = d.getDate();
+              var time="";
+              var date="";
+              var month="";
+              
+              
+              //add the missing zero to minutes les than 10
+              if(d.getMinutes()<10){
+            	  minutes = "0"+d.getMinutes()
+              } else {
+            	  minutes = d.getMinutes()
+              }
+              
+              if(d.getHours()<10){
+            	  hours = "0"+d.getHours();
+              } else {
+            	  hours = d.getHours();
+              }
+              
+              if(month=d.getMonth()==0){
+            	  month="Januar";
+              } else if(month=d.getMonth()==1){
+            	  month="Februar";
+              } else if(month=d.getMonth()==2){
+            	  month="März";
+              }else if(month=d.getMonth()==3){
+            	  month="April";
+              } else if(month=d.getMonth()==4){
+            	  month="Mai";
+              } else if(month=d.getMonth()==5){
+            	  month="Juni";
+              } else if(month=d.getMonth()==6){
+            	  month="Juli";
+              } else if(month=d.getMonth()==7){
+            	  month="August";
+              } else if(month=d.getMonth()==8){
+            	  month="September";
+              }else if(month=d.getMonth()==9){
+            	  month="Oktober";
+              }else if(month=d.getMonth()==10){
+            	  month="November";
+              }else if(month=d.getMonth()==11){
+            	  month="Dezember";
+              }
+			 time=hours+":"+minutes+" Uhr";
+              
+              date = n + ", "+day+". "+month;
+              
+              
+              var lightColor = "";
+              var lightColorName = "";
+			  if(event.colorId=="3"){
+				  lightColor ="<img src='img/violette_3.png' width='70' height='70'/>"; 
+				  lightColorName = "violette";
+			  } 
+			  if(event.colorId=="9"){
+				  lightColor ="<img src='img/blue_3.png' width='70' height='70'/>"; 
+				  lightColorName = "blue";
+			  } 
+			  if(event.colorId=="10"){
+				  lightColor ="<img src='img/green_3.png' width='70' height='70'/>";  
+				  lightColorName = "green";
+			  }
+			  if(event.colorId=="11"){
+				  lightColorName = "red";
+				  lightColor ="<img src='img/red_3.png' width='70' height='70'/>";
+			  }
+			  
+			  
+
+			  // add a item
+			 
+			  // or remove it
+			  
+			  objMedikamentInformation.krankheit = krankheit;
+			  objMedikamentInformation.medikament=medikament;
+			  var formatedDate = einnahme.substring(0,16);
+			  objMedikamentInformation.einnahmeZeitpunkt=formatedDate;
+			  objMedikamentInformation.lightColorName=lightColorName;
+			  map[event.id] = objMedikamentInformation;
+			  
+			  console.log(formatedDate);
+			  
+	    	  $("<tr><td>"+lightColor+"</td><td style='vertical-align:middle;'><font size='5'>"+krankheit+"</font></td><td style='vertical-align:middle;'><font size='5'>"+medikament+"</font></td><td style='vertical-align:middle;'><font size='5'>"+date	+"</font></td><td style='vertical-align:middle;'><font size='5'>"+time+"</font></td><td><button value='"+event.id+"' type='button' class='btn btn-warning' id='btnDelete"+i+"' style='width:80px;height:80px'><span style='font-size:30px' class='glyphicon glyphicon-pencil' aria-hidden='true'></span></butto	n></td></tr>").appendTo("tbody[id='tbodyMedicineList']");
+	    		
+              $("#btnDelete"+i).unbind('click').click(function () {
+            	var eventID = $(this).val();
+     		    localStorage.setItem('SiteDestination', "MainInformation");
+    		    localStorage.setItem('Medikament', map[eventID].medikament);
+    		    localStorage.setItem('Krankheit', map[eventID].krankheit);
+    		    localStorage.setItem('selectedLight', map[eventID].lightColorName);
+    		    localStorage.setItem('EventID', eventID);
+    		    localStorage.setItem('EinnahmeZeitpunkt', map[eventID].einnahmeZeitpunkt);
+    		    //localStorage.setItem('Dauer', valueDuration);
+    	 	    //localStorage.setItem('Intervall', valueIntervall);
+           	    
+    	 	    console.log(einnahme);
+    		    $('#anzfeld').load('editMedicine.html');
+    		    
+				 
+          	  });
+            
+              
+            }
+            
+            removeDuplicate(arrCalendarResults);
+
+          }
+		
+        });
+      }
+      
+      
+      function removeDuplicate(arr){
+  	    var tmp = [];
+  	    for(var i = 0; i < arr.length; i++){
+  	        tmp.push(arr[i]);
+  	    }
+  	    return tmp;
+  	}
+      
+      
+      function back(){
+      	$('#anzfeld').load('index.html');
+    	  }
+      
+      
+
+    </script>
+    <script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
+	<script src="js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="js/vendor/jquery.sortelements.js" type="text/javascript"></script>
+	<script src="js/jquery.bdt.js" type="text/javascript"></script>
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth">
+    </script>
+</body>

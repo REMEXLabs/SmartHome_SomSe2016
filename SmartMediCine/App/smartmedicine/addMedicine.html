@@ -1,0 +1,105 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<style>
+div.bo {
+    width:60%;
+    margin: auto;
+    margin-left: auto ;
+    margin-right: auto ;
+}</style>
+<script src="js/createCalendarEvent.js"></script>
+<script src="lib/jquery-1.7.1.min.js"></script>
+
+    <script type="text/javascript">
+    function back(){
+    	$('#anzfeld').load('index.html');
+  	 }
+    
+    
+   
+    </script>
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth">
+    </script>
+</head>
+<body>
+
+      <div id="authorize-div" style="display: none">
+      <span>Authorize access to Google Calendar API</span>
+      <!--Button for the user to click to initiate auth sequence -->
+      <button id="authorize-button" onclick="handleAuthClick(event)">
+        Authorize
+      </button>
+    </div>
+
+
+				<div class="col-lg-12" align="center">
+                    <img width="80" height=80" src="img/pills-blue.png"><h1 class="page-header"><font style="font-size:90px;color:#0015ff;text-shadow:2px 2px 3px rgba(0,0,0,0.3)"> Smart MediCine</font></h1>
+                </div>
+
+
+ <div class="bo">
+    
+    <form>
+    
+    
+
+<div align="center">
+<table>
+<tr>
+<td><img  width="60" height="60" src="img/pills-blue.png"><h4><b>Allgemein</b></h4></td>
+<td><img style="opacity:0.4" width="60" height="60" src="img/clock.png"><h4 style="opacity:0.4"><b>Zeitpunkt</b></h4></td>
+<td><img style="opacity:0.4" width="60" height="60" src="img/blau.png"><h4 style="opacity:0.4"><b>Lichtfarbe</b></h4></td>
+</tr>
+</table>
+</div>
+    <hr>
+    <table>
+    <tr>
+    	<td width="100%"><font style="font-size:20px"><b>Krankheit:</b></font> <input class='form-control' type="text" height="100px" id="txtKrankheit"/> </td>
+    	</tr>
+    	<tr>
+    	<td width="100%"><font style="font-size:20px"><b>Medikament:</b></font> <input class='form-control'  type="text" width="100" id="txtMedikament"/></td>
+    	<td width="100"></td>
+    </tr>
+    </table>
+   
+		 	
+		 	
+		 	    	
+  <button style="display: none;"  id="btnOpenModal" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><img width="35px" height="35px" src="img/info.png"><font size="6"><b>  Kalendareintrag gespeichert</b></font></h4>
+        </div>
+        <div class="modal-body">
+          <p id="pAlertInfo"><font size="4">Der Kalendareintrag für das Medikament</font></p>
+        </div>
+        <div class="modal-footer">
+          <button id="btnCloseModal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+		 	
+    </form> <br><br>
+    
+
+				<button onClick="back()" style="height:60px; width:150px" class='btn btn-primary'><font style="font-size:17px"><b>zurück</b></font></button>
+
+	    <div class="col col-lg-2" style="float:right;">
+	     <button name="btnAddMainInformation" id="btnAddMainInformation" style="height:60px; width:150px" class='btn btn-danger'><font style="font-size:17px"><b>weiter</b></font></button>
+				
+	</div>
+  
+  
+</body>
+</html>

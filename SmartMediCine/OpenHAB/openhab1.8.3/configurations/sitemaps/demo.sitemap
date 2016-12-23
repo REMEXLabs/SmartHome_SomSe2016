@@ -1,0 +1,7 @@
+sitemap demo label="Demo House"
+{
+	Frame {
+		Selection item=Light_scene mappings=["weiss"="weiß", "rot"="rot", "gelb"="gelb", "gruen"="grün", "dunkelgruen"="dunkelgrün", "cyan"="cyan", "blau"="blau", "magenta"="magenta"]
+		Switch item=MilightSwitch label="LED1"
+	}
+}

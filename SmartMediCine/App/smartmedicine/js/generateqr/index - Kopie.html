@@ -1,0 +1,84 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<title>QR code generator - SinusGear.com</title>
+<!-- Author: Juraj Michalek - 2012 - http://georgik.sinusgear.com -->
+<style type="text/css">
+</style>
+<script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+
+var urlParams = {};
+(function () {
+    var e,
+        a = /\+/g,  // Regex for replacing addition symbol with a space
+        r = /([^&=]+)=?([^&]*)/g,
+        d = function (s) { return decodeURIComponent(s.replace(a, " ")); },
+        q = window.location.search.substring(1);
+
+    while (e = r.exec(q))
+       urlParams[d(e[1])] = d(e[2]);
+})();
+
+function qrKeyUpHandler(event) {
+    var value =  $('#qrCodeInput').val();
+    $('#qrcode').html("").qrcode(value);
+    var link = "http://qr.sinusgear.com/?q=" + value;
+    $('#qrLink').attr('href', link).text(link);
+}
+
+function tet(){
+    var value =  $('#qrCodeInput').val();
+    $('#qrcode').html("").qrcode(value);
+    var link = "http://qr.sinusgear.com/?q=" + value;
+    $('#qrLink').attr('href', link).text(link);
+}
+
+function qrDownloadButtonClickHandler(event) {
+    var canvas = $("#qrcode > canvas")[0];
+    window.location = canvas.toDataURL("image/png");
+	alert(canvas.toDataURL("image/png"));
+}
+
+$(document).ready(function () {
+    var text = "http://www.safeq4.com";
+
+    // Use text from ?q=... if available
+    if (urlParams.hasOwnProperty("q")) {
+        text = urlParams["q"];
+    }
+
+    $('#qrDownloadButton').click(qrDownloadButtonClickHandler);
+	$('#qrgenerate').click(tet);
+    qrKeyUpHandler(null);
+	
+	$("#qrgenerate").click(function () {
+			    			
+    var value =  "18";
+    $('#qrcode').html("").qrcode(value);
+    var link = "http://qr.sinusgear.com/?q=" + value;
+    $('#qrLink').attr('href', link).text(link);
+		           	 
+		            });
+});
+</script>
+
+<body>
+<h1>QR Code generator - HTML5</h1>
+
+<div>
+    <div>Enter text: <input id="qrCodeInput" type="text" value="http://www.safeq4.com" size="50" type="hidden"/></div>
+    <div>URL: <a id="qrLink" href="http://qr.sinusgear.com">http://qr.sinusgear.com</a></div>
+    <div><input type="button" id="qrDownloadButton" value="Get QR code as image"/></div>
+	<div><input type="button" id="qrgenerate" value="Get QR code as image"/></div>
+    <div id="qrcode"></div>
+</div>
+<a href="data:image/png;base64,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" download="filename.jpg">do</a>
+<div>
+- <a href="http://georgik.sinusgear.com">Georgik's blog</a>
+</div>
+
+</body>
+</html>

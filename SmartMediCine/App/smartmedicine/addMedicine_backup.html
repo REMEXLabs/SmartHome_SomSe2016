@@ -1,0 +1,251 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<style>
+div.bo {
+    width:60%;
+    margin: auto;
+    margin-left: auto ;
+    margin-right: auto ;
+}</style>
+<script src="lib/jquery-1.7.1.min.js"></script>
+
+    <script type="text/javascript">
+    function back(){
+    	$('#anzfeld').load('index.html');
+  	  }
+    
+    function next(){
+    	$('#anzfeld').load('addMedicine_2.html');
+  	  }
+    
+    
+    $(function () {
+        $('#datetimepicker1').datetimepicker();
+    });
+      // Your Client ID can be retrieved from your project in the Google
+      // Developer Console, https://console.developers.google.com
+      
+      
+      
+        var CLIENT_ID = '964242476289-2tua7gt8lf9r9sr6deavpcb1aovgsgkq.apps.googleusercontent.com';
+		/*var CLIENT_ID = '1013497704000-uolinpa3cgtn1n2gr24qtdt379f867go.apps.googleusercontent.com';*/
+
+      var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+
+      /**
+       * Check if current user has authorized this application.
+       */
+      function checkAuth() {
+        gapi.auth.authorize(
+          {
+            'client_id': CLIENT_ID,
+            'scope': SCOPES.join(' '),
+            'immediate': true
+          }, handleAuthResult);
+      }
+
+      /**
+       * Handle response from authorization server.
+       *
+       * @param {Object} authResult Authorization result.
+       */
+      function handleAuthResult(authResult) {
+        var authorizeDiv = document.getElementById('authorize-div');
+        if (authResult && !authResult.error) {
+          // Hide auth UI, then load client library.
+          authorizeDiv.style.display = 'none';
+        } else {
+          // Show auth UI, allowing the user to initiate authorization by
+          // clicking authorize button.
+          authorizeDiv.style.display = 'inline';
+        }
+      }
+
+      /**
+       * Initiate auth flow in response to user clicking authorize button.
+       *
+       * @param {Event} event Button click event.
+       */
+      function handleAuthClick(event) {
+        gapi.auth.authorize(
+          {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
+          handleAuthResult);
+        return false;
+      }
+
+      /**
+       * Load Google Calendar client library. List upcoming events
+       * once client library is loaded.
+       */
+      function loadCalendarApi() {
+        gapi.client.load('calendar', 'v3', listUpcomingEvents);
+      }
+
+      /**
+       * Print the summary and start datetime/date of the next ten events in
+       * the authorized user's calendar. If no events are found an
+       * appropriate message is printed.
+       */
+       		 
+      function listUpcomingEvents() {
+    	  var inputKrankheit = document.getElementById('txtKrankheit');
+    	  var valueInputKrankeit = inputKrankheit.value;
+    	  
+    	  var inputMedikament = document.getElementById('txtMedikament');
+    	  var valueInputMedikament = inputMedikament.value;
+    	    
+    	  var inputZeitpunkt = document.getElementById('txtEinnahmeZeitpunkt');
+    	  var valueInputZeitpunkt = inputZeitpunkt.value;
+    	  
+    	  var valueEinnahmeZeitpunkt = document.getElementById("txtEinnahmeZeitpunkt").value;
+    	  
+    	  var e = document.getElementById("selColor");
+    	  var strUser = e.options[e.selectedIndex].value;
+    	  
+    	  var selDuration = document.getElementById("selDuration");
+    	  var valueDuration = selDuration.options[selDuration.selectedIndex].id;
+    	  
+    	  var inputIntervall = document.getElementById('txtIntervall');
+    	  var valueIntervall = inputIntervall.value;
+    	  
+    	  var colorId = "";
+    	  if(strUser=="blau"){
+    		  colorId="9";
+ 	   	  }
+    	  if(strUser=="gruen"){
+    		  colorId="10";
+    	  }
+    	  if(strUser=="rot"){
+    		  colorId="11";
+    	  }
+		
+    	// Refer to the JavaScript quickstart on how to setup the environment:
+    	// https://developers.google.com/google-apps/calendar/quickstart/js
+    	// Change the scope to 'https://www.googleapis.com/auth/calendar' and delete any
+    	// stored credentials.
+
+    	var newDateObj =  new Date(valueEinnahmeZeitpunkt+':00+02:00');
+    	var endDate = new Date(newDateObj.getTime() + 10*60000);
+    	var endISODate = endDate.toISOString();
+    	
+    	var event = {
+    	  'summary': valueInputKrankeit+'//'+valueInputMedikament,
+    	  'location': '800 Howard St., San Francisco, CA 94103',
+    	  'colorId': colorId,
+    	  'description': 'BEGIN:MilightSwitch:ON END:MilightSwitch:OFF',
+    	  'start': {
+    	    'dateTime': valueEinnahmeZeitpunkt+':00',
+    	    'timeZone': 'Europe/Berlin'
+    	  },
+    	  'end': {
+    	    'dateTime': endISODate,
+    	    'timeZone': 'Europe/Berlin'
+    	  },
+    	  'recurrence': [
+    	    'RRULE:FREQ='+valueDuration+';COUNT='+valueIntervall
+    	  ],
+    	  'reminders': {
+    	    'useDefault': false,
+    	    'overrides': [
+    	      {'method': 'email', 'minutes': 24 * 60},
+    	      {'method': 'popup', 'minutes': 10}
+    	    ]
+    	  }
+    	};
+
+    	var request = gapi.client.calendar.events.insert({
+    	  'calendarId': 'primary',
+    	  'resource': event
+    	});
+
+    	request.execute(function(event) {
+    	 
+    	});
+      }
+      
+    </script>
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth">
+    </script>
+</head>
+<body>
+				<div class="col-lg-12">
+                    <h1 class="page-header"><i class="fa fa-home"></i> Medikament hinzufügen</h1>
+                </div>
+      <div id="authorize-div" style="display: none">
+      <span>Authorize access to Google Calendar API</span>
+      <!--Button for the user to click to initiate auth sequence -->
+      <button id="authorize-button" onclick="handleAuthClick(event)">
+        Authorize
+      </button>
+    </div>
+    
+
+ <div class="bo">
+    
+    <form>
+    
+    <h4><b>Medikamenten Informationen</b></h4>
+    <hr>
+    <table>
+    <tr>
+    	<td width="100%">Krankheit: <input class='form-control' type="text" width="100" id="txtKrankheit"/> </td>
+    	</tr>
+    	<tr>
+    	<td width="100%">Medikament: <input class='form-control'  type="text" width="100" id="txtMedikament"/></td>
+    	<td width="100"></td>
+    </tr>
+    </table>
+    <br>
+    <h4><b>Zeitpunkt</b></h4>
+    <hr>
+    <table >
+    	<tr>
+    		<td>Einnahmezeitpunkt <input class='form-control' type="datetime-local" width="100" id="txtEinnahmeZeitpunkt"></td>
+    		<td>Zeitraum: 
+		<select id="selDuration" class="selectpicker">
+			<option id="DAILY">Täglich</option>
+			<option id="WEEKLY">Wöchentlich</option>
+		</select>  
+		</td>
+		
+    	<td align="right">
+		Intervall: <input  class='form-control' type="text" id="txtIntervall"/></td>
+
+    	</tr>
+    	<tr>
+    		
+    		</tr>
+    		<tr>
+    		
+
+    	</tr>
+    </table>
+    
+    <h4><b>Licht</b></h4>
+    <hr>
+				<select id="selColor" class="selectpicker">
+					<option id="rot">rot</option>
+					<option id="blau">blau</option>
+					<option id="gruen">gruen</option>
+					<option id="gelb">gelb</option>
+				</select>
+    	
+		    	
+		
+		
+	
+  
+    	
+    </form> <br><br>
+    
+    <div class="col col-lg-2" style="float:left;">
+				<button onClick="back()" class='btn btn-primary'>zurück</button>
+	</div>
+	    <div class="col col-lg-2" style="float:right;">
+					<button onClick="loadCalendarApi()" class='btn btn-success'>speichern</button>
+	</div>
+   <button onClick="next()" class='btn btn-primary'>weiter</button>
+  
+</body>
+</html>

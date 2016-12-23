@@ -1,0 +1,332 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<style>
+div.bo {
+    width:60%;
+    margin: auto;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+
+#myImage {
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* msie */
+}
+
+
+</style>
+<script src="lib/jquery-1.7.1.min.js"></script>
+<script src="js/createCalendarEvent.js"></script>
+<script type="text/javascript">
+
+    document.getElementById("aRed").style.opacity = 0.3;    
+    document.getElementById("aBlue").style.opacity = 0.3;
+    document.getElementById("aGreen").style.opacity = 0.3;
+    document.getElementById("aViolette").style.opacity = 0.3;	
+    function bigImg(x) {
+    	document.getElementById("aRed").style.opacity = 1; 
+		$("#tdRed").empty();
+		$("#tdRed").append("<font size='4'><b>Rot</b></font>");
+		
+    }
+    function normalImg(x) {
+    	document.getElementById("aRed").style.opacity = 0.3;
+    	$("#tdRed").empty();
+    }
+    
+    function blueHover(x) {
+    	document.getElementById("aBlue").style.opacity = 1;
+		$("#tdBlue").empty();
+		$("#tdBlue").append("<font size='4'><b>Blau</b></font>");
+    }
+
+    function blueNormal(x) {
+    	document.getElementById("aBlue").style.opacity = 0.3;
+		$("#tdBlue").empty();
+    }
+    
+    function greenHover(x) {
+    	document.getElementById("aGreen").style.opacity = 1;
+		$("#tdGreen").empty();
+		$("#tdGreen").append("<font size='4'><b>Grün</b></font>");
+    }
+
+    function greenNormal(x) {
+    	document.getElementById("aGreen").style.opacity = 0.3;	
+		$("#tdGreen").empty();
+    }
+    
+    
+    function violetteHover(x) {
+    	document.getElementById("aViolette").style.opacity = 1;
+		$("#tdViolette").empty();
+		$("#tdViolette").append("<font size='4'><b>Magenta</b></font>");
+    }
+
+    function violetteNormal(x) {
+    	$("#tdViolette").empty();
+    	document.getElementById("aViolette").style.opacity = 0.3;	
+    }
+    
+    
+  /*privat  
+  var CLIENT_ID = '964242476289-2tua7gt8lf9r9sr6deavpcb1aovgsgkq.apps.googleusercontent.com';
+  */	
+  /*smartmedicine*/
+  var CLIENT_ID = '775420638236-4lrrdee122meo64rfep55q8gdmgqb9sb.apps.googleusercontent.com';
+
+  var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+
+  /**
+   * Check if current user has authorized this application.
+   */
+  function checkAuth() {
+    gapi.auth.authorize(
+      {
+        'client_id': CLIENT_ID,
+        'scope': SCOPES.join(' '),
+        'immediate': true
+      }, handleAuthResult);
+  }
+
+  /**
+   * Handle response from authorization server.
+   *
+   * @param {Object} authResult Authorization result.
+   */
+  function handleAuthResult(authResult) {
+    var authorizeDiv = document.getElementById('authorize-div');
+    if (authResult && !authResult.error) {
+      // Hide auth UI, then load client library.
+      authorizeDiv.style.display = 'none';
+    } else {
+      // Show auth UI, allowing the user to initiate authorization by
+      // clicking authorize button.
+      authorizeDiv.style.display = 'inline';
+    }
+  }
+
+  /**
+   * Initiate auth flow in response to user clicking authorize button.
+   *
+   * @param {Event} event Button click event.
+   */
+  function handleAuthClick(event) {
+    gapi.auth.authorize(
+      {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
+      handleAuthResult);
+    return false;
+  }
+
+  /**
+   * Load Google Calendar client library. List upcoming events
+   * once client library is loaded.
+   */
+   
+   
+  function checkColor(){
+	  var lightSelection = localStorage.getItem('selectedLight');
+	  
+	  if(lightSelection!=null){
+		  loadCalendarApi();
+	  } else {
+		  localStorage.setItem('alertType', "farbeVergessen");
+		  $("#pAlertInfo").empty();
+		  $("#pAlertInfo").append("<font size=4>Bitte Farbe wählen</font>");
+		  $('#btnOpenModal').click();
+	  }
+  }
+  function loadCalendarApi() {
+    gapi.client.load('calendar', 'v3', listUpcomingEvents);
+  }
+
+  /**
+   * Print the summary and start datetime/date of the next ten events in
+   * the authorized user's calendar. If no events are found an
+   * appropriate message is printed.
+   */
+   		 
+  function listUpcomingEvents() {	
+	var krankheit = localStorage.getItem('Krankheit');
+  	var medikament = localStorage.getItem('Medikament');
+	var colorId = localStorage.getItem('ColorId'); 
+
+	var einnahmeZeitpunkt = localStorage.getItem('EinnahmeZeitpunkt');
+	var rythmus = localStorage.getItem('Dauer');
+	var dauer = localStorage.getItem('Intervall');
+  	
+   	var newDateObj =  new Date(einnahmeZeitpunkt+':00+02:00');
+   	var endDate = new Date(newDateObj.getTime() + 10*60000);
+   	var endISODate = endDate.toISOString();
+   	var colorName = "";
+   	
+   	if(colorId=="11"){
+   		colorName = "rot";
+   	}
+   	if(colorId=="9"){
+   		colorName = "blau";
+   	}
+   	if(colorId=="10"){
+   		colorName = "gruen";
+   	}
+   	if(colorId=="3"){
+   		colorName = "magenta";
+   	}
+   	
+   	if(dauer==""){
+   		dauer=1;
+   	}
+   	
+   	var event = {
+   	  'summary': krankheit+'//'+medikament,
+   	  'colorId': colorId,
+   	  'description': 'BEGIN:MilightSwitch:ON\nBEGIN:Light_scene:'+colorName+'\nEND:MilightSwitch:OFF',
+   	  'start': {
+   	    'dateTime': einnahmeZeitpunkt+':00',
+   	    'timeZone': 'Europe/Berlin'
+   	  },
+   	  'end': {
+   	    'dateTime': endISODate,
+   	    'timeZone': 'Europe/Berlin'
+   	  },
+   	  'recurrence': [
+   	    'RRULE:FREQ='+rythmus+';COUNT='+dauer
+   	  ],
+   	  'reminders': {
+   	    'useDefault': false,
+   	    'overrides': [
+   	      {'method': 'email', 'minutes': 24 * 60},
+   	      {'method': 'popup', 'minutes': 10}
+   	    ]
+   	  }
+   	};
+
+	var request = gapi.client.calendar.events.insert({
+	  'calendarId': 'primary',
+	  'resource': event
+	});
+	
+	
+	request.execute(function(event) {
+		  localStorage.setItem('alertType', "gespeichert");
+		  
+		  if(localStorage.getItem('EventID')!=null){
+           	gapi.client.load('calendar', 'v3', function() {  
+          	       var request = gapi.client.calendar.events.delete({
+          	            calendarId: 'primary',
+          	            eventId: localStorage.getItem('EventID'),
+          	       });
+          	       
+          	     request.execute(function(resp) {
+          	     });
+          	  });	  
+		  }
+			  
+			  
+			  
+		  $("#pAlertInfo").empty();
+		  $("#pAlertInfo").append("<font size=4>Medikament <b>'"+localStorage.getItem('Medikament')+"'</b> konnte erfolgreich gespeichert werden</font>");
+		  $('#btnOpenModal').click();
+
+	});
+  }
+  
+  function redirectToMain(){
+	  $('#anzfeld').load('index.html');
+  }
+
+    </script>
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth">
+    </script>
+</head>
+<body>
+            <div class="row">
+                <div class="col-lg-12" id="anzfeld">
+                    <article>
+				<div class="col-lg-12" align="center">
+                    <img width="80" height=80" src="img/pills-blue.png"><h1 class="page-header"><font style="font-size:90px;color:#0015ff;text-shadow:2px 2px 3px rgba(0,0,0,0.3)"> Smart MediCine</font></h1>
+                </div>
+    <div>
+      <div id="authorize-div" style="display: none">
+      <span>Authorize access to Google Calendar API</span>
+      <!--Button for the user to click to initiate auth sequence -->
+      <button id="authorize-button" onclick="handleAuthClick(event)">
+        Authorize
+      </button>
+    </div>
+    
+
+ <div class="bo">
+    
+    <br>
+<div align="center">
+<table>
+<tr>
+<td><img style="opacity:0.4" width="60" height="60" src="img/pills-blue.png"><h4 style="opacity:0.4"><b>Allgemein</b></h4></td>
+<td><img style="opacity:0.4"  width="60" height="60" src="img/clock.png"><h4 style="opacity:0.4"><b>Zeitpunkt</b></h4></td>
+<td><img width="60" height="60" src="img/blau.png"><h4><b>Lichtfarbe</b></h4></td>
+</tr>
+</table>
+</div>
+    <hr>
+    <form>
+  
+  
+<div align="center">  
+  <table>
+  	<tr>
+  	 <td>  	 <a id="aViolette"><img onmouseover="violetteHover(this)" id="aViolette" onmouseout="violetteNormal(this)" class="myImage" src='img/violette_3.png' width='150' height='150'/></a></td>
+    <td>	<a id="aRed"><img onmouseover="bigImg(this)" id="aRed" name="red" onmouseout="normalImg(this)" class="myImage" src='img/red_3.png' width='150' height='150'/></a></td>
+    <td>	<a id="aBlue"><img id="aBlue" name="red" onmouseover="blueHover(this)" onmouseout="blueNormal(this)" class="myImage" src='img/blue_3.png' width='150' height='150'/></a></td>
+    <td>	<a id="aGreen"><img id="aGreen" name="red" onmouseover="greenHover(this)" onmouseout="greenNormal(this)" class="myImage" src='img/green_3.png' width='150' height='145'/></a></td>
+  	</tr>
+  	<tr>
+		<td align="center" id="tdViolette"></td>
+		<td align="center" id="tdRed"></td>
+		<td align="center" id="tdBlue"></td>
+		<td align="center" id="tdGreen"></td>
+  	</tr>
+  </table>
+  
+ </div>
+    	
+    	
+    	
+  <button style="display: none;" id="btnOpenModal" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><img width="35px" height="35px" src="img/info.png"><font size="6"><b>  Kalendareintrag gespeichert</b></font></h4>
+        </div>
+        <div class="modal-body">
+          <p id="pAlertInfo"><font size="4">Der Kalendareintrag für das Medikament</font></p>
+        </div>
+        <div class="modal-footer">
+          <button id="btnCloseModal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+    	
+    </form> <br><br><br><br>
+    
+    <div class="col col-lg-2" style="float:left;">
+				<button id="btnBackLightSelection" style="height:60px; width:150px"  class='btn btn-primary'><font style="font-size:17px"><b>zurück</b></font></button>
+	</div>
+	    <div class="col col-lg-2" style="float:right;">
+	     <button onClick="checkColor()" id="btnAddColor" name="btnAddColor" style="height:60px; width:150px"  class='btn btn-success'><font style="font-size:17px"><b>speichern</b></font></button>
+				
+	</div>
+  
+</body>
+</html>

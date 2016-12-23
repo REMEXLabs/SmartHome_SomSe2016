@@ -1,0 +1,48 @@
+	#navibar {
+    min-height: 100px;
+}
+
+
+#imgbrand{
+     height:80px;
+    width: inherit;
+}
+
+#helpimg{
+    width: 70%;
+    border:2px solid #A4A4A4;
+}
+
+#testb {
+  margin-top: 50px;
+}
+
+#myh3 {
+	margin-top: 1px;
+}
+
+#mytbale {
+	background-color: #f8f8f8;
+}
+
+#featuresbearbeiten {
+	width: 70px;
+}
+
+#myth {
+	width:400px; 
+	word-break: break-all; 
+	word-wrap: break-word;
+}
+
+#mytd {
+	width:200px; 
+	word-break: break-all; 
+	word-wrap: break-word;
+}
+
+#mytd2 {
+	width:29%; 
+	word-break: break-all; 
+	word-wrap: break-word;
+}

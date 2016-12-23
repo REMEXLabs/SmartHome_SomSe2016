@@ -1,0 +1,3 @@
+String Light_scene      "Scenes"
+Color  Light_scene_ColorSelect "Scene Selector"   <colorwheel> (MiLight)    {milight="bridge1;6;rgb"}  
+Switch MilightSwitch	{milight="bridge1;6;whiteMode"}
