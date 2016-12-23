@@ -1,0 +1,35 @@
+
+<h1>Smart Care</h1>
+<?php foreach($infos as $headline => $info):?>
+    <h2><?php echo $headline ?></h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>method</th>
+                <th>params</th>
+                <th>pattern</th>
+                <th>example</th>
+                <th>desc</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($info as $entry):?>
+                <tr>
+                    <td><?php echo $entry['method'] ?></td>
+                    <td>
+                        <?php if(is_array($entry['param'])): ?>
+                            <?php foreach($entry['param'] as $name => $value):?>
+                                <?php echo $name?>: <?php echo $value?><br />
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <?php echo $entry['param'] ?>
+                        <?php endif ?>
+                    </td>
+                    <td><?php echo $entry['pattern'] ?></td>
+                    <td><a href="<?php echo $entry['example'] ?>"><?php echo $entry['example'] ?></a></td>
+                    <td><?php echo $entry['text'] ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endforeach; ?>

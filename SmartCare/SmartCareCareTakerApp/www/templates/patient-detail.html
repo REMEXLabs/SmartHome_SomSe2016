@@ -1,0 +1,46 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="{{patient.firstname}} {{patient.lastname}}">
+<ion-content class="grey">
+    <div class="item item-avatar">
+      <img src="{{patient.image}}">
+      <h2>{{patient.firstname}} {{patient.lastname}}</h2>
+      <p>{{patient.city}}</p>
+    </div>
+<br>
+
+<div>
+  <h4>Vitalwerte</h4>
+</div>
+<div class="list">
+  <ion-item class="item item item-icon-left item-icon-right" href="#/tab/patients/{{patient.id}}/patient-heart">
+    <i class="icon ion-heart"></i>
+        {{patientHeartRatesLast}} Schläge pro Minute
+      <i class="icon ion-chevron-right icon-accessory"></i>
+  </ion-item>
+  <ion-item class="item item item-icon-left item-icon-right" href="#/tab/patients/{{patient.id}}/patient-sleep">
+    <i class="icon ion-ios-moon"></i>
+        {{patientSleepCyclesLast}} Stunden/Tiefschlaf 
+      <i class="icon ion-chevron-right icon-accessory"></i>
+  </ion-item>
+</div>
+
+<div>
+  <h4>Geräte</h4>
+</div>
+
+<ion-toggle ng-repeat="item in patientDevices"
+                    ng-model="item.state" 
+                    ng-checked="item.state" ng-change="toggleChange(item.id, item.state, item.name)">
+                    <i class="{{item.icon}} toggle-icon"></i> 
+            {{ item.name }}
+        </ion-toggle>
+
+
+
+  </ion-content>
+</ion-view>

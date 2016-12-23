@@ -1,0 +1,38 @@
+/* Empty. Add your own CSS if you like */
+.item.item-avatar {
+	
+}
+.red {
+	text-align: center;
+	color: red;
+	font-weight: bold;
+	background-color: white;
+}
+
+.grey {
+	background-color: #F5F5F5;
+}
+
+h4 {
+	padding-left: 10px;
+}
+
+.pull-left {
+position: absolute;
+left: 210px !important;
+top: -38px !important;
+width: 40px !important;
+}
+
+.toggle-icon {
+	position: absolute;
+	font-size: 2.1em;
+	left: 10px !important;
+	top: 11px;
+    width: 30px;
+    text-align: center
+}
+
+.item-toggle{
+	padding-left: 55px;
+}

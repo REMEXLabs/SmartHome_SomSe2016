@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Smart Home Care Band App</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="steps">What this app does: \n
+    tracks heartrate once per minute and posts value to server. \n
+    if heartrate is lower than average, gyroscope is activate and tracks movement for several minutes.\n
+    if movement count is low, person is probably asleep -> sleep cycle is posted on server.
+    </string>
+    <string name="start">Start sleeping</string>
+    <string name="end">End sleeping</string>
+    <string name="emerg">Trigger emergency</string>
+
+</resources>

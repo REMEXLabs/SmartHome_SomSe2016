@@ -1,0 +1,30 @@
+<ion-view view-title="Herzfrequenz">
+  <ion-content>
+        <ion-slide-box on-slide-changed="slideHasChanged($index)">
+  <ion-slide>
+    <div class="item item-divider">
+            Ruhefrequenz des Puls
+        </div>
+        <div class="item item-text-wrap">
+            <canvas id="line1" class="chart chart-line" data="data" labels="labels" legend="false" series="series" options="{showTooltips: false}"></canvas>
+        </div> 
+  </ion-slide>
+  <ion-slide>
+    <div class="item item-divider">
+            Ruhefrequenz des Puls Tag
+        </div>
+        <div class="item item-text-wrap">
+            <canvas id="line2" class="chart chart-line" data="dataTag" labels="labelsTag" legend="false" series="series1" options="{showTooltips: false}"></canvas>
+        </div> 
+  </ion-slide>
+  <ion-slide>
+    <div class="item item-divider">
+            Ruhefrequenz des Puls Stunde
+        </div>
+        <div class="item item-text-wrap">
+            <canvas id="line3" class="chart chart-line" data="dataStunde" labels="labelsStunde" legend="false" series="series2" options="{showTooltips: false}"></canvas>
+        </div> 
+  </ion-slide>
+</ion-slide-box>
+  </ion-content>
+</ion-view>
